@@ -1,0 +1,1647 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://gordic.cz/GordicIDM/WsIdmObjects" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://gordic.cz/GordicIDM/WsIdmObjects" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://gordic.cz/GordicIDM/WsIdmObjects">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="QueryAsyncResult">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ticketID" type="s:unsignedInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="QueryAsyncResultResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="QueryAsyncResultResult" type="tns:WsResponseOfWsIdmObject" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsResponseOfWsIdmObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TicketID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InternalError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="State" type="tns:TaskStates" />
+          <s:element minOccurs="0" maxOccurs="1" name="WsResults" type="tns:ArrayOfWsIdmObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="TaskStates">
+        <s:restriction base="s:string">
+          <s:enumeration value="Created" />
+          <s:enumeration value="Prepared" />
+          <s:enumeration value="Running" />
+          <s:enumeration value="Completed" />
+          <s:enumeration value="Error" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfWsIdmObject">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmObject" nillable="true" type="tns:WsIdmObject" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmObject">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:AuditableObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Attributes" type="tns:ArrayOfIdmAttribute" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AuditableObject">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:NamedObject">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="DatumVytvoreni" type="s:dateTime" />
+              <s:element minOccurs="1" maxOccurs="1" name="DatumZmeny" type="s:dateTime" />
+              <s:element minOccurs="0" maxOccurs="1" name="ZmenuProv" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Aktivita" type="s:int" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="NamedObject">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:EntityObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="EntityObject">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="IdmAttributeType">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:AuditableObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="DisplayName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Visible" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="ValueType" type="tns:AttributeValueType" />
+              <s:element minOccurs="1" maxOccurs="1" name="Class" type="tns:AttributeClass" />
+              <s:element minOccurs="1" maxOccurs="1" name="ObjectType" type="tns:IdmObjectTypes" />
+              <s:element minOccurs="1" maxOccurs="1" name="ObjectTypeGuid" nillable="true" type="s1:guid" />
+              <s:element minOccurs="1" maxOccurs="1" name="Required" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsKey" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="IsPassword" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="AdminCanModify" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Default_Integer" nillable="true" type="s:long" />
+              <s:element minOccurs="0" maxOccurs="1" name="Default_String" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="Default_Date" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="AttributeValueType">
+        <s:restriction base="s:string">
+          <s:enumeration value="String" />
+          <s:enumeration value="Integer" />
+          <s:enumeration value="Date" />
+          <s:enumeration value="InternalObject" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="AttributeClass">
+        <s:restriction base="s:string">
+          <s:enumeration value="Normal" />
+          <s:enumeration value="BuiltIn" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="IdmObjectTypes">
+        <s:restriction base="s:string">
+          <s:enumeration value="Endpoint" />
+          <s:enumeration value="User" />
+          <s:enumeration value="Role" />
+          <s:enumeration value="OrgUnit" />
+          <s:enumeration value="Group" />
+          <s:enumeration value="EndpointUser" />
+          <s:enumeration value="EndpointRole" />
+          <s:enumeration value="EndpointOrgUnit" />
+          <s:enumeration value="EndpointGroup" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfIdmAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="IdmAttribute" nillable="true" type="tns:IdmAttribute" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="IdmAttribute">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:BaseAttribute">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="AttributeType" type="tns:IdmAttributeType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseAttribute">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="StringValue" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IntegerValue" nillable="true" type="s:long" />
+          <s:element minOccurs="1" maxOccurs="1" name="DateValue" nillable="true" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="CreateUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsUsers" type="tns:ArrayOfWsIdmUser" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfWsIdmUser">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmUser" nillable="true" type="tns:WsIdmUser" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmUser">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfWsIdmRole" />
+              <s:element minOccurs="0" maxOccurs="1" name="Groups" type="tns:ArrayOfWsIdmGroup" />
+              <s:element minOccurs="0" maxOccurs="1" name="OrgUnits" type="tns:ArrayOfWsIdmOrgUnit" />
+              <s:element minOccurs="0" maxOccurs="1" name="IdmLogin" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="CN" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Jmeno" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Prijmeni" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Titul" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Telefon" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="Fax" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="DatumNarozeni" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfWsIdmRole">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmRole" nillable="true" type="tns:WsIdmRole" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmRole">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:WsIdmRole" />
+              <s:element minOccurs="1" maxOccurs="1" name="RoleType" type="tns:IdmRoleType" />
+              <s:element minOccurs="0" maxOccurs="1" name="ParentEndpoint" type="tns:WsIdmEndpoint" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="ApplicationRoles" type="tns:ArrayOfWsIdmRole" />
+              <s:element minOccurs="0" maxOccurs="1" name="ApplicationGroups" type="tns:ArrayOfWsIdmGroup" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="IdmRoleType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Role" />
+          <s:enumeration value="ApplicationRole" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="WsIdmEndpoint">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="EndpointType" type="tns:WsIdmEndpointType" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="WsIdmEndpointType">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfWsIdmGroup">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmGroup" nillable="true" type="tns:WsIdmGroup" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmGroup">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:WsIdmGroup" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfWsIdmOrgUnit">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmOrgUnit" nillable="true" type="tns:WsIdmOrgUnit" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmOrgUnit">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Parent" type="tns:WsIdmOrgUnit" />
+              <s:element minOccurs="0" maxOccurs="1" name="Description" type="s:string" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="CreateUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateUsersResult" type="tns:WsResponseOfWsIdmUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsResponseOfWsIdmUser">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TicketID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InternalError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="State" type="tns:TaskStates" />
+          <s:element minOccurs="0" maxOccurs="1" name="WsResults" type="tns:ArrayOfWsIdmUser" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfFilter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Filter" nillable="true" type="tns:Filter" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Filter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Operator" type="tns:FilterOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="OperatorNext" nillable="true" type="tns:FilterOperatorNext" />
+          <s:element minOccurs="0" maxOccurs="1" name="IntegerValues" type="tns:ArrayOfLong" />
+          <s:element minOccurs="0" maxOccurs="1" name="StringValues" type="tns:ArrayOfString" />
+          <s:element minOccurs="0" maxOccurs="1" name="DateValues" type="tns:ArrayOfDateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="FilterOperator">
+        <s:restriction base="s:string">
+          <s:enumeration value="In" />
+          <s:enumeration value="Equals" />
+          <s:enumeration value="NotEquals" />
+          <s:enumeration value="Greater" />
+          <s:enumeration value="Less" />
+          <s:enumeration value="Like" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="FilterOperatorNext">
+        <s:restriction base="s:string">
+          <s:enumeration value="And" />
+          <s:enumeration value="Or" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfLong">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="long" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfDateTime">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="dateTime" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DbPagingInfo">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Start" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Length" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Total" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SortCol" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SortDir" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadUsersResult" type="tns:WsResponseOfWsIdmUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadUsersQuick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadUsersQuickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadUsersQuickResult" type="tns:ArrayOfWsIdmUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsUsers" type="tns:ArrayOfWsIdmUser" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateUsersResult" type="tns:WsResponseOfWsIdmUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteUsers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idmUsersIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="DeleteUsersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteUsersResult" type="tns:WsResponseOfWsIdmUser" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StoreUserImage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="buff" type="s:base64Binary" />
+            <s:element minOccurs="0" maxOccurs="1" name="format" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="StoreUserImageResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="CreateRoles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idmRoles" type="tns:ArrayOfWsIdmRole" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateRolesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateRolesResult" type="tns:WsResponseOfWsIdmRole" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsResponseOfWsIdmRole">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TicketID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InternalError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="State" type="tns:TaskStates" />
+          <s:element minOccurs="0" maxOccurs="1" name="WsResults" type="tns:ArrayOfWsIdmRole" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadRoles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadRolesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadRolesResult" type="tns:WsResponseOfWsIdmRole" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadRolesQuick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadRolesQuickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadRolesQuickResult" type="tns:ArrayOfWsIdmRole" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateRoles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsRoles" type="tns:ArrayOfWsIdmRole" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateRolesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateRolesResult" type="tns:WsResponseOfWsIdmRole" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRoles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="rolesIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteRolesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteRolesResult" type="tns:WsResponseOfWsIdmRole" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsGroups" type="tns:ArrayOfWsIdmGroup" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateGroupsResult" type="tns:WsResponseOfWsIdmGroup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsResponseOfWsIdmGroup">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TicketID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InternalError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="State" type="tns:TaskStates" />
+          <s:element minOccurs="0" maxOccurs="1" name="WsResults" type="tns:ArrayOfWsIdmGroup" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadGroupsResult" type="tns:WsResponseOfWsIdmGroup" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadGroupsQuick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadGroupsQuickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadGroupsQuickResult" type="tns:ArrayOfWsIdmGroup" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupMembers">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idGroupFilter" nillable="true" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="groupNameFilter" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="userIdFilters" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetGroupMembersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetGroupMembersResult" type="tns:ArrayOfWsIdmUser" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsGroups" type="tns:ArrayOfWsIdmGroup" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateGroupsResult" type="tns:WsResponseOfWsIdmGroup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idmGroupsIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteGroupsResult" type="tns:WsResponseOfWsIdmGroup" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrgUnits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsOrgUnits" type="tns:ArrayOfWsIdmOrgUnit" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateOrgUnitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateOrgUnitsResult" type="tns:WsResponseOfWsIdmOrgUnit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsResponseOfWsIdmOrgUnit">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="TicketID" nillable="true" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="InternalError" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="State" type="tns:TaskStates" />
+          <s:element minOccurs="0" maxOccurs="1" name="WsResults" type="tns:ArrayOfWsIdmOrgUnit" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ReadOrgUnits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadOrgUnitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadOrgUnitsResult" type="tns:WsResponseOfWsIdmOrgUnit" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadOrgUnitsQuick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadOrgUnitsQuickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadOrgUnitsQuickResult" type="tns:ArrayOfWsIdmOrgUnit" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadAllOrgUnits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="rootOuID" nillable="true" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadAllOrgUnitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadAllOrgUnitsResult" type="tns:ArrayOfWsIdmOrgUnit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateOrgUnits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsOrgUnits" type="tns:ArrayOfWsIdmOrgUnit" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateOrgUnitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateOrgUnitsResult" type="tns:WsResponseOfWsIdmOrgUnit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteOrgUnits">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idmOrgUnitsIDs" type="tns:ArrayOfInt" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteOrgUnitsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteOrgUnitsResult" type="tns:WsResponseOfWsIdmOrgUnit" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateUserRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsUserRequest" type="tns:WsIdmUserRequest" />
+            <s:element minOccurs="1" maxOccurs="1" name="async" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WsIdmUserRequest">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Roles" type="tns:ArrayOfWsIdmUserRequestRole" />
+              <s:element minOccurs="0" maxOccurs="1" name="User" type="tns:WsIdmUser" />
+              <s:element minOccurs="1" maxOccurs="1" name="RequestState" type="tns:RequestStates" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfWsIdmUserRequestRole">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmUserRequestRole" nillable="true" type="tns:WsIdmUserRequestRole" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="WsIdmUserRequestRole">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:WsIdmObject">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Role" type="tns:WsIdmRole" />
+              <s:element minOccurs="1" maxOccurs="1" name="RoleState" type="tns:RequestRoleStates" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="RequestRoleStates">
+        <s:restriction base="s:string">
+          <s:enumeration value="Role_Prepared" />
+          <s:enumeration value="Role_Completed" />
+          <s:enumeration value="Role_Processing" />
+          <s:enumeration value="Role_Approved" />
+          <s:enumeration value="Role_Rejected" />
+        </s:restriction>
+      </s:simpleType>
+      <s:simpleType name="RequestStates">
+        <s:restriction base="s:string">
+          <s:enumeration value="Prepared" />
+          <s:enumeration value="Completed" />
+          <s:enumeration value="Processing" />
+          <s:enumeration value="Canceled" />
+          <s:enumeration value="Rejected" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="CreateUserRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateUserRequestResult" type="tns:WsIdmUserRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadUserRequests">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadUserRequestsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadUserRequestsResult" type="tns:ArrayOfWsIdmUserRequest" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfWsIdmUserRequest">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmUserRequest" nillable="true" type="tns:WsIdmUserRequest" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="UpdateUserRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="wsUserRequest" type="tns:WsIdmUserRequest" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateUserRequestResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="DeleteUserRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="idmUsersRequestsID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteUserRequestResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReadEndpointsQuick">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfFilter" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ReadEndpointsQuickResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ReadEndpointsQuickResult" type="tns:ArrayOfWsIdmEndpoint" />
+            <s:element minOccurs="0" maxOccurs="1" name="pagingInfo" type="tns:DbPagingInfo" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfWsIdmEndpoint">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="WsIdmEndpoint" nillable="true" type="tns:WsIdmEndpoint" />
+        </s:sequence>
+      </s:complexType>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="QueryAsyncResultSoapIn">
+    <wsdl:part name="parameters" element="tns:QueryAsyncResult" />
+  </wsdl:message>
+  <wsdl:message name="QueryAsyncResultSoapOut">
+    <wsdl:part name="parameters" element="tns:QueryAsyncResultResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateUsers" />
+  </wsdl:message>
+  <wsdl:message name="CreateUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadUsers" />
+  </wsdl:message>
+  <wsdl:message name="ReadUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadUsersQuickSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadUsersQuick" />
+  </wsdl:message>
+  <wsdl:message name="ReadUsersQuickSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadUsersQuickResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUsers" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUsersSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteUsers" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUsersSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteUsersResponse" />
+  </wsdl:message>
+  <wsdl:message name="StoreUserImageSoapIn">
+    <wsdl:part name="parameters" element="tns:StoreUserImage" />
+  </wsdl:message>
+  <wsdl:message name="StoreUserImageSoapOut">
+    <wsdl:part name="parameters" element="tns:StoreUserImageResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateRolesSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateRoles" />
+  </wsdl:message>
+  <wsdl:message name="CreateRolesSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadRolesSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadRoles" />
+  </wsdl:message>
+  <wsdl:message name="ReadRolesSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadRolesQuickSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadRolesQuick" />
+  </wsdl:message>
+  <wsdl:message name="ReadRolesQuickSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadRolesQuickResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateRolesSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateRoles" />
+  </wsdl:message>
+  <wsdl:message name="UpdateRolesSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRolesSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteRoles" />
+  </wsdl:message>
+  <wsdl:message name="DeleteRolesSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateGroups" />
+  </wsdl:message>
+  <wsdl:message name="CreateGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadGroups" />
+  </wsdl:message>
+  <wsdl:message name="ReadGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadGroupsQuickSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadGroupsQuick" />
+  </wsdl:message>
+  <wsdl:message name="ReadGroupsQuickSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadGroupsQuickResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupMembersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetGroupMembers" />
+  </wsdl:message>
+  <wsdl:message name="GetGroupMembersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetGroupMembersResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateGroups" />
+  </wsdl:message>
+  <wsdl:message name="UpdateGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteGroups" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteGroupsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrgUnitsSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateOrgUnits" />
+  </wsdl:message>
+  <wsdl:message name="CreateOrgUnitsSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateOrgUnitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadOrgUnitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadOrgUnits" />
+  </wsdl:message>
+  <wsdl:message name="ReadOrgUnitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadOrgUnitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadOrgUnitsQuickSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadOrgUnitsQuick" />
+  </wsdl:message>
+  <wsdl:message name="ReadOrgUnitsQuickSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadOrgUnitsQuickResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllOrgUnitsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadAllOrgUnits" />
+  </wsdl:message>
+  <wsdl:message name="ReadAllOrgUnitsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadAllOrgUnitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOrgUnitsSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateOrgUnits" />
+  </wsdl:message>
+  <wsdl:message name="UpdateOrgUnitsSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateOrgUnitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOrgUnitsSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteOrgUnits" />
+  </wsdl:message>
+  <wsdl:message name="DeleteOrgUnitsSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteOrgUnitsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateUserRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateUserRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateUserRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadUserRequestsSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadUserRequests" />
+  </wsdl:message>
+  <wsdl:message name="ReadUserRequestsSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadUserRequestsResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateUserRequest" />
+  </wsdl:message>
+  <wsdl:message name="UpdateUserRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateUserRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteUserRequest" />
+  </wsdl:message>
+  <wsdl:message name="DeleteUserRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteUserRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReadEndpointsQuickSoapIn">
+    <wsdl:part name="parameters" element="tns:ReadEndpointsQuick" />
+  </wsdl:message>
+  <wsdl:message name="ReadEndpointsQuickSoapOut">
+    <wsdl:part name="parameters" element="tns:ReadEndpointsQuickResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ObjectsManagerSoap">
+    <wsdl:operation name="QueryAsyncResult">
+      <wsdl:input message="tns:QueryAsyncResultSoapIn" />
+      <wsdl:output message="tns:QueryAsyncResultSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUsers">
+      <wsdl:input message="tns:CreateUsersSoapIn" />
+      <wsdl:output message="tns:CreateUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsers">
+      <wsdl:input message="tns:ReadUsersSoapIn" />
+      <wsdl:output message="tns:ReadUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsersQuick">
+      <wsdl:input message="tns:ReadUsersQuickSoapIn" />
+      <wsdl:output message="tns:ReadUsersQuickSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUsers">
+      <wsdl:input message="tns:UpdateUsersSoapIn" />
+      <wsdl:output message="tns:UpdateUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUsers">
+      <wsdl:input message="tns:DeleteUsersSoapIn" />
+      <wsdl:output message="tns:DeleteUsersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="StoreUserImage">
+      <wsdl:input message="tns:StoreUserImageSoapIn" />
+      <wsdl:output message="tns:StoreUserImageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateRoles">
+      <wsdl:input message="tns:CreateRolesSoapIn" />
+      <wsdl:output message="tns:CreateRolesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadRoles">
+      <wsdl:input message="tns:ReadRolesSoapIn" />
+      <wsdl:output message="tns:ReadRolesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadRolesQuick">
+      <wsdl:input message="tns:ReadRolesQuickSoapIn" />
+      <wsdl:output message="tns:ReadRolesQuickSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRoles">
+      <wsdl:input message="tns:UpdateRolesSoapIn" />
+      <wsdl:output message="tns:UpdateRolesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRoles">
+      <wsdl:input message="tns:DeleteRolesSoapIn" />
+      <wsdl:output message="tns:DeleteRolesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroups">
+      <wsdl:input message="tns:CreateGroupsSoapIn" />
+      <wsdl:output message="tns:CreateGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroups">
+      <wsdl:input message="tns:ReadGroupsSoapIn" />
+      <wsdl:output message="tns:ReadGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroupsQuick">
+      <wsdl:input message="tns:ReadGroupsQuickSoapIn" />
+      <wsdl:output message="tns:ReadGroupsQuickSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupMembers">
+      <wsdl:input message="tns:GetGroupMembersSoapIn" />
+      <wsdl:output message="tns:GetGroupMembersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGroups">
+      <wsdl:input message="tns:UpdateGroupsSoapIn" />
+      <wsdl:output message="tns:UpdateGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroups">
+      <wsdl:input message="tns:DeleteGroupsSoapIn" />
+      <wsdl:output message="tns:DeleteGroupsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrgUnits">
+      <wsdl:input message="tns:CreateOrgUnitsSoapIn" />
+      <wsdl:output message="tns:CreateOrgUnitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnits">
+      <wsdl:input message="tns:ReadOrgUnitsSoapIn" />
+      <wsdl:output message="tns:ReadOrgUnitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnitsQuick">
+      <wsdl:input message="tns:ReadOrgUnitsQuickSoapIn" />
+      <wsdl:output message="tns:ReadOrgUnitsQuickSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllOrgUnits">
+      <wsdl:input message="tns:ReadAllOrgUnitsSoapIn" />
+      <wsdl:output message="tns:ReadAllOrgUnitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrgUnits">
+      <wsdl:input message="tns:UpdateOrgUnitsSoapIn" />
+      <wsdl:output message="tns:UpdateOrgUnitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOrgUnits">
+      <wsdl:input message="tns:DeleteOrgUnitsSoapIn" />
+      <wsdl:output message="tns:DeleteOrgUnitsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserRequest">
+      <wsdl:input message="tns:CreateUserRequestSoapIn" />
+      <wsdl:output message="tns:CreateUserRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserRequests">
+      <wsdl:input message="tns:ReadUserRequestsSoapIn" />
+      <wsdl:output message="tns:ReadUserRequestsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserRequest">
+      <wsdl:input message="tns:UpdateUserRequestSoapIn" />
+      <wsdl:output message="tns:UpdateUserRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserRequest">
+      <wsdl:input message="tns:DeleteUserRequestSoapIn" />
+      <wsdl:output message="tns:DeleteUserRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ReadEndpointsQuick">
+      <wsdl:input message="tns:ReadEndpointsQuickSoapIn" />
+      <wsdl:output message="tns:ReadEndpointsQuickSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ObjectsManagerSoap" type="tns:ObjectsManagerSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryAsyncResult">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/QueryAsyncResult" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUsers">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsers">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsersQuick">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUsersQuick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUsers">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUsers">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteUsers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StoreUserImage">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/StoreUserImage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRoles">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadRoles">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadRolesQuick">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadRolesQuick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRoles">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRoles">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroups">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroups">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroupsQuick">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadGroupsQuick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupMembers">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/GetGroupMembers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGroups">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroups">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteGroups" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrgUnits">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateOrgUnits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnits">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadOrgUnits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnitsQuick">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadOrgUnitsQuick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllOrgUnits">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadAllOrgUnits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrgUnits">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateOrgUnits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOrgUnits">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteOrgUnits" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserRequest">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateUserRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserRequests">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUserRequests" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserRequest">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateUserRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserRequest">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteUserRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadEndpointsQuick">
+      <soap:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadEndpointsQuick" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ObjectsManagerSoap12" type="tns:ObjectsManagerSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="QueryAsyncResult">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/QueryAsyncResult" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUsers">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsers">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUsersQuick">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUsersQuick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUsers">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUsers">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteUsers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="StoreUserImage">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/StoreUserImage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateRoles">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateRoles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadRoles">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadRoles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadRolesQuick">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadRolesQuick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateRoles">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateRoles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteRoles">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteRoles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateGroups">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroups">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadGroupsQuick">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadGroupsQuick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetGroupMembers">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/GetGroupMembers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateGroups">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGroups">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteGroups" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateOrgUnits">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateOrgUnits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnits">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadOrgUnits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadOrgUnitsQuick">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadOrgUnitsQuick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadAllOrgUnits">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadAllOrgUnits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateOrgUnits">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateOrgUnits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteOrgUnits">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteOrgUnits" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateUserRequest">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/CreateUserRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadUserRequests">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadUserRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateUserRequest">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/UpdateUserRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUserRequest">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/DeleteUserRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReadEndpointsQuick">
+      <soap12:operation soapAction="http://gordic.cz/GordicIDM/WsIdmObjects/ReadEndpointsQuick" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ObjectsManager">
+    <wsdl:port name="ObjectsManagerSoap" binding="tns:ObjectsManagerSoap">
+      <soap:address location="http://pprchal-k52f/GBR/Gordic.Idm.WebPortal/secured/ObjectsManager.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ObjectsManagerSoap12" binding="tns:ObjectsManagerSoap12">
+      <soap12:address location="http://pprchal-k52f/GBR/Gordic.Idm.WebPortal/secured/ObjectsManager.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
