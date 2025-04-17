@@ -10,3 +10,5 @@ Je potřeba zadat následující údaje:
 * kořenovou organizační jednotku
 
 * název organizační jednotky
+
+příklad: `eSpisLiteTest DOMENA uzivatel heslo https://server/41KCE05/secured/ObjectsManager.asmx 7`
