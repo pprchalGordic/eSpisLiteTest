@@ -9,6 +9,7 @@
 using eSpisLiteTest.WsGenerated;
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace eSpisLiteTest
 {
@@ -30,10 +31,21 @@ namespace eSpisLiteTest
             };
             var rootOU = int.Parse(args[4]);
 
-            // Bellevue, poskytovatel sociálních služeb
-            Console.WriteLine("Zadejte název OU");
-            var ouName = Console.ReadLine();
-            var ou = FindOU(client, ouName, rootOU);
+            Console.WriteLine("Hledat podle IČO/názvu [0-IČO] [1-Název] ?-");
+            WsIdmOrgUnit ou = null;
+            switch (Console.ReadLine())
+            {
+                case "0":
+                    Console.WriteLine("Zadejte IČO ?-");
+                    ou = FindOuByICO(client, Console.ReadLine(), rootOU);
+                    break;
+
+                case "1":
+                    Console.WriteLine("Zadejte název OU ?-");
+                    ou = FindOuByName(client, Console.ReadLine(), rootOU);
+                    break;
+            }
+
             if (ou != null)
             {
                 Console.Out.WriteLine("OU: " + ou.Id + ", " + ou.Name);
@@ -53,7 +65,7 @@ namespace eSpisLiteTest
             }
         }
 
-        static WsIdmOrgUnit FindOU(WsGenerated.ObjectsManager client, string ouName, int parentOU_ID)
+        static WsIdmOrgUnit FindOuByName(WsGenerated.ObjectsManager client, string ouName, int parentOU_ID)
         {
             var pagingInfo = new DbPagingInfo
             {
@@ -61,7 +73,7 @@ namespace eSpisLiteTest
                 Length = 10
             };
 
-            var filters = new List<Filter>()
+            var filters = new List<Filter>
             {
                 new Filter
                 {
@@ -80,13 +92,71 @@ namespace eSpisLiteTest
                 }
             };
 
+            PrintXML(filters, "FindOuByName");
+
             var response = client.ReadOrgUnits(
                 filters.ToArray(),
                 ref pagingInfo,
                 false
             );
 
-            return response.WsResults[0];
+            if (response.WsResults.Length == 1)
+            {
+                return response.WsResults[0];
+            }
+
+            return null;
+        }
+
+        static WsIdmOrgUnit FindOuByICO(WsGenerated.ObjectsManager client, string ico, int parentOU_ID)
+        {
+            var pagingInfo = new DbPagingInfo
+            {
+                Start = 0,
+                Length = 10
+            };
+
+            var filters = new List<Filter>
+            {
+                new Filter
+                {
+                    Name = "IDM_ORGUNIT_PARENT_ID",
+                    Operator = FilterOperator.Equals,
+                    IntegerValues = new long[] { parentOU_ID },
+                    OperatorNext = FilterOperatorNext.And
+                },
+
+                new Filter
+                {
+                    Name = "ATTR_NAME=PO_ORGUNIT_ICO",
+                    Operator = FilterOperator.In,
+                    StringValues = new string[] { ico },
+                    OperatorNext = FilterOperatorNext.And
+                }
+            };
+
+            PrintXML(filters, "FindOuByICO");
+
+            var response = client.ReadOrgUnits(
+                filters.ToArray(),
+                ref pagingInfo,
+                false
+            );
+
+            if (response.WsResults.Length == 1)
+            {
+                return response.WsResults[0];
+            }
+
+            return null;
+        }
+
+        static void PrintXML(object req, string prefix)
+        {
+            Console.Out.WriteLine($"{prefix} -------------------------------");
+            new XmlSerializer(req.GetType()).Serialize(Console.Out, req);
+            Console.Out.WriteLine("-----------------------------------------------------");
+            Console.Out.WriteLine();
         }
 
         static WsResponseOfWsIdmUser FindUsers(WsGenerated.ObjectsManager client, int ouID)
@@ -97,7 +167,7 @@ namespace eSpisLiteTest
                 Length = 100
             };
 
-            var filters = new List<Filter>()
+            var filters = new List<Filter>
             {
                 new Filter
                 {
