@@ -9,6 +9,11 @@ Je potřeba zadat následující údaje:
 * url
 * kořenovou organizační jednotku
 
-* název organizační jednotky
+NEBO
+
+* cestu k souboru, který obsahuje stejné položky
+
 
 příklad: `eSpisLiteTest DOMENA uzivatel heslo https://server/41KCE05/secured/ObjectsManager.asmx 7`
+
+nebo : `eSpisLiteTestC:\profil.txt`

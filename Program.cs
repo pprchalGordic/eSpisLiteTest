@@ -20,16 +20,16 @@ namespace eSpisLiteTest
             Console.InputEncoding = System.Text.Encoding.UTF8;
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+            var profile = args.Length == 1 ? Profile.Load(args[0]) : Profile.Create(args);
             var client = new ObjectsManager
             {
-                Url = args[3],
+                Url = profile.Url,
                 Credentials = new System.Net.NetworkCredential(
-                    userName: args[1],
-                    password: args[2],
-                    domain: args[0]
+                    userName: profile.Login,
+                    password: profile.Password,
+                    domain: profile.Domain
                 )
             };
-            var rootOU = int.Parse(args[4]);
 
             Console.WriteLine("Hledat podle IČO/názvu [0-IČO] [1-Název] ?-");
             WsIdmOrgUnit ou = null;
@@ -37,12 +37,12 @@ namespace eSpisLiteTest
             {
                 case "0":
                     Console.WriteLine("Zadejte IČO ?-");
-                    ou = FindOuByICO(client, Console.ReadLine(), rootOU);
+                    ou = FindOuByICO(client, Console.ReadLine(), profile.RootOU);
                     break;
 
                 case "1":
                     Console.WriteLine("Zadejte název OU ?-");
-                    ou = FindOuByName(client, Console.ReadLine(), rootOU);
+                    ou = FindOuByName(client, Console.ReadLine(), profile.RootOU);
                     break;
             }
 
