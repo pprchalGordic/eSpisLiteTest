@@ -51,7 +51,7 @@ namespace eSpisLiteTest
                 Console.Out.WriteLine("OU: " + ou.Id + ", " + ou.Name);
                 foreach (var user in FindUsers(client, ou.Id).WsResults)
                 {
-                    Console.WriteLine($"User[{user.Id}-{user.IdmLogin}] {user.Jmeno} {user.Prijmeni}");
+                    Console.WriteLine($"User[{user.Id}- IdmLogin<{user.IdmLogin}>] {user.Jmeno} {user.Prijmeni}");
                     foreach (var role in user.Roles)
                     {
                         Console.WriteLine($"\t Role[{role.Id}-{role.Name}] {role.RoleType}");
@@ -104,7 +104,12 @@ namespace eSpisLiteTest
             {
                 return response.WsResults[0];
             }
+            else if(response.WsResults.Length > 1)
+            {
+                Console.WriteLine($"Multiple OU found ({response.WsResults.Length})");
+            }
 
+            Console.WriteLine($"NO OU found ({response.WsResults.Length})");
             return null;
         }
 
@@ -147,7 +152,12 @@ namespace eSpisLiteTest
             {
                 return response.WsResults[0];
             }
+            else if (response.WsResults.Length > 1)
+            {
+                Console.WriteLine($"Multiple OU found ({response.WsResults.Length})");
+            }
 
+            Console.WriteLine($"NO OU found ({response.WsResults.Length})");
             return null;
         }
 
