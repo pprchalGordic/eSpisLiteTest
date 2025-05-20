@@ -100,6 +100,9 @@ namespace eSpisLiteTest
                 false
             );
 
+            Console.WriteLine();
+            PrintXML(response, "Response-ByName");
+
             if (response.WsResults.Length == 1)
             {
                 return response.WsResults[0];
@@ -148,6 +151,9 @@ namespace eSpisLiteTest
                 false
             );
 
+            Console.WriteLine();
+            PrintXML(response, "Response-ByICO");
+
             if (response.WsResults.Length == 1)
             {
                 return response.WsResults[0];
@@ -161,11 +167,12 @@ namespace eSpisLiteTest
             return null;
         }
 
-        static void PrintXML(object req, string prefix)
+        static void PrintXML(object obj, string prefix)
         {
-            Console.Out.WriteLine($"{prefix} -------------------------------");
-            new XmlSerializer(req.GetType()).Serialize(Console.Out, req);
-            Console.Out.WriteLine("-----------------------------------------------------");
+            Console.Out.WriteLine($"-- BEGIN {prefix}  --------------");
+            new XmlSerializer(obj.GetType()).Serialize(Console.Out, obj);
+            Console.Out.WriteLine();
+            Console.Out.WriteLine($"-- END   {prefix}  --------------");
             Console.Out.WriteLine();
         }
 
