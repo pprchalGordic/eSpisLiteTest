@@ -49,7 +49,7 @@ namespace eSpisLiteTest
             if (ou != null)
             {
                 Console.Out.WriteLine("OU: " + ou.Id + ", " + ou.Name);
-                foreach (var user in FindUsers(client, ou.Id).WsResults)
+                foreach (var user in FindUsers(client, ou.Id, profile.RoleID).WsResults)
                 {
                     Console.WriteLine($"User[{user.Id}- IdmLogin<{user.IdmLogin}>] {user.Jmeno} {user.Prijmeni}");
                     foreach (var role in user.Roles)
@@ -176,7 +176,7 @@ namespace eSpisLiteTest
             Console.Out.WriteLine();
         }
 
-        static WsResponseOfWsIdmUser FindUsers(WsGenerated.ObjectsManager client, int ouID)
+        static WsResponseOfWsIdmUser FindUsers(WsGenerated.ObjectsManager client, int ouID, int roleID)
         {
             var pagingInfo = new DbPagingInfo
             {
@@ -191,6 +191,13 @@ namespace eSpisLiteTest
                     Name = "ORGUNIT",
                     Operator = FilterOperator.In,
                     IntegerValues = new long[] { ouID },
+                    OperatorNext = FilterOperatorNext.And
+                },
+                new Filter
+                {
+                    Name = "WITH_IDM_ROLES",
+                    Operator = FilterOperator.In,
+                    IntegerValues = new long[] { roleID },
                     OperatorNext = FilterOperatorNext.And
                 }
             };

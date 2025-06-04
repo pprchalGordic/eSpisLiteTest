@@ -21,14 +21,14 @@ namespace eSpisLiteTest
         public string Password { get; private set; }
         public string Url { get; private set; }
         public int RootOU { get; private set; }
-
+        public int RoleID { get; private set; }
 
         public static Profile Load(string fileName)
         {
             var lines = File.ReadAllLines(fileName);
-            if (lines.Length != 5)
+            if (lines.Length != 6)
             {
-                throw new ArgumentException($"File {fileName} must contain 5 lines");
+                throw new ArgumentException($"File {fileName} must contain 6 lines");
             }
 
             return Create(lines);
@@ -42,7 +42,8 @@ namespace eSpisLiteTest
                 Login = args[1],
                 Password = args[2],
                 Domain = args[0],
-                RootOU = int.Parse(args[4])
+                RootOU = int.Parse(args[4]),
+                RoleID = int.Parse(args[5])
             };
         }
     }
